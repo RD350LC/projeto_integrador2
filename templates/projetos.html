@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construtora View - Projetos</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body { background: #f6f8fa; font-family: 'Segoe UI', Arial, sans-serif; }
+        .header { background: linear-gradient(90deg, #0d47a1 60%, #1976d2 100%); color: #fff; padding: 40px 0 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+        .main-title { font-size: 2.8rem; font-weight: 700; margin-bottom: 10px; letter-spacing: 1px; }
+        .subtitle { font-size: 1.2rem; opacity: 0.9; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+        .projetos-section { margin: 40px 0 0 0; }
+        .projetos-grid { display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; }
+        .projeto-card { background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(33, 150, 243, 0.08); padding: 24px; width: 320px; transition: transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; animation: fadeInUp 1s; }
+        .projeto-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 8px 32px rgba(33, 150, 243, 0.18); }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: none;}
+        }
+        .projeto-image { width: 100%; height: 180px; object-fit: cover; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(33,150,243,0.09); }
+        .projeto-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .projeto-status .material-icons {
+            font-size: 1.2rem;
+        }
+        .projeto-card h3 { font-size: 1.3rem; margin: 0 0 8px 0; color: #1565c0; }
+        .projeto-card p { font-size: 1rem; color: #444; margin-bottom: 16px; }
+        .btn-secondary { background: #fff; color: #1976d2; border: 2px solid #1976d2; padding: 8px 18px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: background 0.2s, color 0.2s; }
+        .btn-secondary:hover { background: #1976d2; color: #fff; }
+        .depoimentos-section { margin: 56px 0 0 0; background: #e3f2fd; border-radius: 16px; padding: 32px 0; }
+        .depoimentos-title { text-align: center; font-size: 1.5rem; color: #1565c0; margin-bottom: 24px; }
+        .depoimentos-list { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+        .depoimento { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(33,150,243,0.07); padding: 20px; width: 320px; font-size: 1rem; color: #333; position: relative; }
+        .depoimento::before { content: '"'; font-size: 2.5rem; color: #1976d2; position: absolute; left: 12px; top: 8px; opacity: 0.2; }
+        .depoimento-autor { font-weight: 600; color: #1976d2; margin-top: 12px; font-size: 0.95rem; }
+        .cta-section { text-align: center; margin: 56px 0 0 0; }
+        .btn-primary { background: linear-gradient(90deg, #1976d2 60%, #64b5f6 100%); color: #fff; border: none; padding: 14px 36px; border-radius: 10px; font-size: 1.2rem; font-weight: 700; text-decoration: none; box-shadow: 0 2px 8px rgba(33,150,243,0.13); transition: background 0.2s, transform 0.2s; }
+        .btn-primary:hover { background: #1565c0; transform: scale(1.04); }
+        .footer { background: #1565c0; color: #fff; text-align: center; padding: 18px 0; margin-top: 56px; border-radius: 0 0 12px 12px; }
+        .projeto-datas { font-size: 0.95rem; color: #666; margin-bottom: 12px; }
+        .progresso-bar {
+            background: #e3f2fd;
+            border-radius: 8px;
+            height: 16px;
+            margin-bottom: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.07);
+        }
+        .progresso-bar-inner {
+            background: linear-gradient(90deg, #1976d2 60%, #64b5f6 100%);
+            height: 100%;
+            border-radius: 8px;
+            transition: width 0.5s;
+            box-shadow: 0 2px 8px #bcdffb;
+        }
+        .progresso-bar-inner.concluido {
+            background: linear-gradient(90deg, #388e3c 60%, #a5d6a7 100%);
+        }
+        /* Modal */
+        .modal-bg {
+            display: none;
+            position: fixed;
+            top:0; left:0; right:0; bottom:0;
+            background: rgba(0,0,0,0.45);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px 24px;
+            max-width: 480px;
+            box-shadow: 0 8px 32px #1976d2;
+            position: relative;
+            animation: fadeIn 0.4s;
+        }
+        .modal-close {
+            position: absolute;
+            top: 12px; right: 18px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #1976d2;
+            cursor: pointer;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95);} to { opacity: 1; transform: scale(1);} }
+        @media (max-width: 900px) { .projetos-grid, .depoimentos-list { flex-direction: column; gap: 24px; align-items: center; } .container { padding: 0 8px; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="main-title">Execução de Projetos</h1>
+            <p class="subtitle">Projetos inovadores, personalizados e com acompanhamento profissional</p>
+        </div>
+    </header>
+    <main class="container">
+        <section class="projetos-section">
+            <h2 style="text-align:center; font-size:2rem; color:#1565c0; margin-bottom:32px;">Projetos em Destaque</h2>
+            <div class="projetos-grid">
+                <!-- Card 1 -->
+                <div class="projeto-card">
+                    <img src="{% static 'images/projeto1.jpg' %}" alt="Projeto 1" class="projeto-image">
+                    <div class="projeto-status">
+                        <span class="material-icons" style="color:#1976d2;">construction</span>
+                        Em andamento
+                    </div>
+                    <div class="projeto-datas">Início: 10/03/2025 &nbsp;|&nbsp; Previsão: 10/09/2025</div>
+                    <div class="progresso-bar">
+                        <div class="progresso-bar-inner" style="width: 45%;"></div>
+                    </div>
+                    <h3>Residencial Jardim</h3>
+                    <p>Projeto arquitetônico moderno e sustentável.</p>
+                    <div class="projeto-actions">
+                        <button class="btn-relatorio" onclick="openModal('relatorio', 'Residencial Jardim')">Relatório</button>
+                        <button class="btn-fotos" onclick="openModal('fotos', 'Residencial Jardim')">Fotos</button>
+                        <a href="#" class="btn btn-secondary">Ver detalhes</a>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="projeto-card">
+                    <img src="{% static 'images/projeto2.jpg' %}" alt="Projeto 2" class="projeto-image">
+                    <div class="projeto-status" style="color:#388e3c;">
+                        <span class="material-icons" style="color:#388e3c;">check_circle</span>
+                        Concluído
+                    </div>
+                    <div class="projeto-datas">Início: 01/11/2024 &nbsp;|&nbsp; Entrega: 15/04/2025</div>
+                    <div class="progresso-bar">
+                        <div class="progresso-bar-inner concluido" style="width: 100%;"></div>
+                    </div>
+                    <h3>Comercial Plaza</h3>
+                    <p>Execução rápida e eficiente para negócios.</p>
+                    <div class="projeto-actions">
+                        <button class="btn-relatorio" onclick="openModal('relatorio', 'Comercial Plaza')">Relatório</button>
+                        <button class="btn-fotos" onclick="openModal('fotos', 'Comercial Plaza')">Fotos</button>
+                        <a href="#" class="btn btn-secondary">Ver detalhes</a>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="projeto-card">
+                    <img src="{% static 'images/projeto3.jpg' %}" alt="Projeto 3" class="projeto-image">
+                    <div class="projeto-status">
+                        <span class="material-icons" style="color:#1976d2;">construction</span>
+                        Em andamento
+                    </div>
+                    <div class="projeto-datas">Início: 20/05/2025 &nbsp;|&nbsp; Previsão: 20/12/2025</div>
+                    <div class="progresso-bar">
+                        <div class="progresso-bar-inner" style="width: 30%;"></div>
+                    </div>
+                    <h3>Edifício Solar</h3>
+                    <p>Projeto com foco em energia renovável.</p>
+                    <div class="projeto-actions">
+                        <button class="btn-relatorio" onclick="openModal('relatorio', 'Edifício Solar')">Relatório</button>
+                        <button class="btn-fotos" onclick="openModal('fotos', 'Edifício Solar')">Fotos</button>
+                        <a href="#" class="btn btn-secondary">Ver detalhes</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="depoimentos-section">
+            <h2 class="depoimentos-title">Depoimentos de Clientes</h2>
+            <div class="depoimentos-list">
+                <div class="depoimento">
+                    "A equipe da Construtora View superou nossas expectativas! O projeto ficou incrível e o acompanhamento foi impecável."
+                    <div class="depoimento-autor">— Ana Paula, cliente residencial</div>
+                </div>
+                <div class="depoimento">
+                    "Profissionais dedicados e soluções inovadoras. Recomendo para qualquer tipo de obra ou reforma."
+                    <div class="depoimento-autor">— Carlos Eduardo, empresário</div>
+                </div>
+                <div class="depoimento">
+                    "O projeto comercial foi entregue antes do prazo e com qualidade superior. Excelente experiência!"
+                    <div class="depoimento-autor">— Juliana Silva, cliente comercial</div>
+                </div>
+            </div>
+        </section>
+        <section class="cta-section">
+            <h2 style="font-size:1.7rem; color:#1565c0;">Solicite seu Projeto</h2>
+            <p style="font-size:1.1rem; color:#444;">Entre em contato para desenvolver o projeto ideal para você.</p>
+            <a href="#contato" class="btn btn-primary">Solicitar Projeto</a>
+        </section>
+    </main>
+    <!-- Modal para relatório/fotos -->
+    <div id="modalBg" class="modal-bg">
+        <div class="modal-content" id="modalContent">
+            <button class="modal-close" onclick="closeModal()">
+                <span class="material-icons">close</span>
+            </button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Construtora View. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    <script>
+        function openModal(tipo, projeto) {
+            const modalBg = document.getElementById('modalBg');
+            const modalBody = document.getElementById('modalBody');
+            if (tipo === 'relatorio') {
+                modalBody.innerHTML = `<h3>Relatório de ${projeto}</h3><p>Em breve você poderá acompanhar o relatório detalhado da obra aqui.</p>`;
+            } else if (tipo === 'fotos') {
+                modalBody.innerHTML = `<h3>Fotos de ${projeto}</h3><p>Em breve você poderá visualizar as fotos do andamento da obra.</p>`;
+            }
+            modalBg.style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('modalBg').style.display = 'none';
+        }
+        // Fechar modal ao clicar fora
+        document.getElementById('modalBg').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
+</body>
+</html>

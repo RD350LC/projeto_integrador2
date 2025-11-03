@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construtora View - Contato</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .contact-section { background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(33,150,243,0.08); padding: 32px; margin: 40px 0; }
+        .contact-form { display: flex; flex-direction: column; gap: 18px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-weight: 600; color: #1565c0; margin-bottom: 6px; }
+        .form-group input, .form-group textarea { border: 1px solid #b3c6e0; border-radius: 8px; padding: 10px; font-size: 1rem; }
+        .form-group input:focus, .form-group textarea:focus { border-color: #1976d2; outline: none; }
+        .btn-primary { background: linear-gradient(90deg, #1976d2 60%, #64b5f6 100%); color: #fff; border: none; padding: 12px 28px; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+        .btn-primary:hover { background: #1565c0; transform: scale(1.04); }
+        .contact-info { margin-top: 36px; display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start; }
+        .info-block { background: #e3f2fd; border-radius: 12px; padding: 18px 24px; flex: 1; min-width: 220px; display: flex; align-items: center; gap: 12px; }
+        .info-icon { font-size: 1.7rem; color: #1976d2; }
+        .map-block { flex: 2; min-width: 300px; }
+        .message-success { color: #388e3c; background: #e8f5e9; border-radius: 8px; padding: 12px; margin-bottom: 18px; text-align: center; }
+        .message-error { color: #d32f2f; background: #ffebee; border-radius: 8px; padding: 12px; margin-bottom: 18px; text-align: center; }
+        @media (max-width: 900px) { .contact-info { flex-direction: column; gap: 18px; } .contact-section { padding: 16px; } }
+    </style>
+    <!-- Adiciona ícones do Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="main-title">Fale Conosco</h1>
+            <p class="subtitle">Tire suas dúvidas ou solicite uma proposta personalizada</p>
+        </div>
+    </header>
+    <main class="container">
+        <section class="contact-section">
+            <h2 style="color:#1565c0;">Entre em Contato</h2>
+            {% if message_success %}
+                <div class="message-success">{{ message_success }}</div>
+            {% endif %}
+            {% if message_error %}
+                <div class="message-error">{{ message_error }}</div>
+            {% endif %}
+            <form action="" method="post" class="contact-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefone">Telefone:</label>
+                    <input type="tel" id="telefone" name="telefone" pattern="^\(?\d{2}\)?[\s-]?\d{4,5}-?\d{4}$" placeholder="(99) 99999-9999">
+                </div>
+                <div class="form-group">
+                    <label for="mensagem">Mensagem:</label>
+                    <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+            <div class="contact-info">
+                <div class="info-block">
+                    <span class="material-icons info-icon">email</span>
+                    <div>
+                        <strong>E-mail:</strong><br>
+                        contato@construtoraview.com.br
+                    </div>
+                </div>
+                <div class="info-block">
+                    <span class="material-icons info-icon">phone</span>
+                    <div>
+                        <strong>Telefone:</strong><br>
+                        (11) 99999-9999
+                    </div>
+                </div>
+                <div class="info-block">
+                    <span class="material-icons info-icon">location_on</span>
+                    <div>
+                        <strong>Endereço:</strong><br>
+                        Av. das Construções, 1234 - São Paulo, SP
+                    </div>
+                </div>
+                <div class="map-block">
+                    <iframe src="https://www.google.com/maps?q=Av.+das+Construções,+1234,+São+Paulo,+SP&output=embed" width="100%" height="180" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Construtora View. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

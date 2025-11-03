@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construtora View - Obras</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="main-title">Acompanhamento de Obras</h1>
+            <p class="subtitle">Transparência e tecnologia para você acompanhar cada etapa do seu projeto</p>
+        </div>
+    </header>
+    <main class="container">
+        <section class="obras-section">
+            <h2>Obras em Andamento</h2>
+            <div class="obras-grid">
+                <div class="obra-card">
+                    <img src="{% static 'images/obra1.jpg' %}" alt="Obra 1" class="obra-image">
+                    <h3>Residencial Vista Bela</h3>
+                    <p>Status: Em execução</p>
+                    <a href="#" class="btn btn-secondary">Ver detalhes</a>
+                </div>
+                <div class="obra-card">
+                    <img src="{% static 'images/obra2.jpg' %}" alt="Obra 2" class="obra-image">
+                    <h3>Comercial Center</h3>
+                    <p>Status: Fundações concluídas</p>
+                    <a href="#" class="btn btn-secondary">Ver detalhes</a>
+                </div>
+                <div class="obra-card">
+                    <img src="{% static 'images/obra3.jpg' %}" alt="Obra 3" class="obra-image">
+                    <h3>Edifício Horizonte</h3>
+                    <p>Status: Acabamento</p>
+                    <a href="#" class="btn btn-secondary">Ver detalhes</a>
+                </div>
+            </div>
+        </section>
+        <section class="cta-section">
+            <h2>Acompanhe seu Projeto</h2>
+            <p>Receba atualizações semanais, fotos e relatórios diretamente no seu e-mail.</p>
+            <a href="#contato" class="btn btn-primary">Quero acompanhar minha obra</a>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Construtora View. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

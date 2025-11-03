@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acompanhamento da Obra - Construtora View</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="main-title">Acompanhamento em Tempo Real</h1>
+            <p class="subtitle">Veja o progresso da sua obra etapa por etapa</p>
+        </div>
+    </header>
+    <main class="container">
+        <section class="acompanhamento-section">
+            <h2>Andamento da Obra</h2>
+            <table class="andamento-table">
+                <thead>
+                    <tr>
+                        <th>Etapa</th>
+                        <th>Status</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for etapa in andamento %}
+                    <tr>
+                        <td>{{ etapa.etapa }}</td>
+                        <td>{{ etapa.status }}</td>
+                        <td>{{ etapa.data }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        <section class="cta-section">
+            <h2>Receba Atualizações</h2>
+            <p>Cadastre-se para receber notificações sobre cada etapa da obra.</p>
+            <a href="/contato/" class="btn btn-primary">Quero ser notificado</a>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Construtora View. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

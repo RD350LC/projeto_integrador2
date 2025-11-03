@@ -1,0 +1,387 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construtora View - Página Inicial</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700,900|Roboto:400,500,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        .navbar {
+            background: #004aad;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+            border-radius: 0 0 32px 32px;
+            font-size: 1.15rem;
+            box-shadow: 0 4px 24px rgba(0,74,173,0.08);
+        }
+        .navbar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .navbar-menu {
+            display: flex;
+            gap: 2rem;
+        }
+        .navbar-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+        .navbar-menu a:hover {
+            color: #00c6fb;
+        }
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #004aad;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 16px #bcdffb;
+            animation: fadeInDown 1s;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        .subtitle {
+            font-size: 1.7rem;
+            color: #007bff;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1.2s;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+        .hero-section {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+            background: linear-gradient(120deg, rgba(255,255,255,0.95) 70%, #e3f2fd 100%);
+            border-radius: 32px;
+            box-shadow: 0 8px 32px rgba(0,74,173,0.10);
+            padding: 5rem 3rem;
+            margin-bottom: 3rem;
+            min-height: 480px;
+            overflow: hidden;
+        }
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('{% static "images/obra1.jpg" %}') center/cover no-repeat;
+            opacity: 0.18;
+            z-index: 0;
+            border-radius: 32px;
+        }
+        .hero-text {
+            flex: 1.2;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-image {
+            flex: 1;
+            text-align: right;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-image img {
+            max-width: 480px;
+            border-radius: 24px;
+            box-shadow: 0 4px 32px #bcdffb;
+            animation: zoomIn 1.3s;
+            filter: brightness(0.98) contrast(1.05);
+        }
+        .btn.btn-primary, .cta-section .btn {
+            background: rgba(255,255,255,0.35);
+            color: #004aad;
+            font-weight: bold;
+            border-radius: 16px;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            margin-top: 1.2rem;
+            box-shadow: 0 4px 24px #bcdffb;
+            border: 1px solid #e3f2fd;
+            backdrop-filter: blur(8px);
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .btn.btn-primary:hover, .cta-section .btn:hover {
+            background: #004aad;
+            color: #fff;
+            box-shadow: 0 8px 32px #1976d2;
+            transform: scale(1.05);
+        }
+        .highlights-section {
+            margin: 3rem 0;
+        }
+        .highlights-grid {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .highlight-item {
+            background: rgba(255,255,255,0.85);
+            border-radius: 24px;
+            box-shadow: 0 4px 24px rgba(0,74,173,0.07);
+            padding: 2.5rem 2rem;
+            max-width: 340px;
+            flex: 1 1 280px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: fadeInUp 1.4s;
+            font-size: 1.1rem;
+        }
+        .highlight-item:hover {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 8px 32px #bcdffb;
+        }
+        .services-section {
+            margin: 3rem 0;
+            text-align: center;
+        }
+        .services-title {
+            font-size: 2rem;
+            color: #004aad;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        .services-grid {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .service-item {
+            background: rgba(255,255,255,0.85);
+            border-radius: 24px;
+            box-shadow: 0 4px 24px rgba(33,150,243,0.09);
+            padding: 2.5rem 1.5rem;
+            min-width: 240px;
+            max-width: 320px;
+            flex: 1 1 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .service-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 32px #bcdffb;
+        }
+        .service-icon {
+            font-size: 3rem;
+            color: #1976d2;
+            margin-bottom: 1rem;
+        }
+        .depoimentos-section {
+            margin: 3.5rem 0 0 0;
+            background: linear-gradient(90deg, #e3f2fd 60%, #fff 100%);
+            border-radius: 24px;
+            padding: 48px 0;
+            animation: fadeIn 1.5s;
+        }
+        .depoimentos-title {
+            text-align: center; font-size: 1.7rem; color: #1565c0; margin-bottom: 32px; font-weight: 700;
+        }
+        .depoimentos-list {
+            display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;
+        }
+        .depoimento {
+            background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(33,150,243,0.09); padding: 28px; width: 340px; font-size: 1.08rem; color: #333; position: relative;
+        }
+        .depoimento::before {
+            content: '"'; font-size: 2.8rem; color: #1976d2; position: absolute; left: 18px; top: 12px; opacity: 0.18;
+        }
+        .depoimento-autor {
+            font-weight: 600; color: #1976d2; margin-top: 18px; font-size: 1rem;
+        }
+        .cta-section {
+            background: linear-gradient(90deg, #004aad 60%, #00c6fb 100%);
+            color: #fff;
+            border-radius: 24px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+            margin: 3rem 0;
+            padding: 3rem;
+            text-align: center;
+            animation: pulse 2s infinite alternate;
+        }
+        .footer {
+            background: #1565c0;
+            color: #fff;
+            text-align: center;
+            padding: 24px 0;
+            margin-top: 3rem;
+            border-radius: 0 0 24px 24px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+        /* Botão flutuante para rolar para o topo */
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            z-index: 999;
+            background: #004aad;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            box-shadow: 0 4px 16px rgba(0,74,173,0.18);
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: background 0.2s, transform 0.2s;
+        }
+        #scrollTopBtn:hover {
+            background: #1976d2;
+            transform: scale(1.08);
+        }
+        @media (max-width: 1200px) {
+            .container { max-width: 98vw; padding: 0 12px; }
+            .hero-section { flex-direction: column; text-align: center; min-height: 320px; padding: 3rem 1rem; }
+            .hero-image img { max-width: 100%; margin-top: 2rem; }
+            .highlights-grid, .services-grid, .depoimentos-list { flex-direction: column; gap: 24px; align-items: center; }
+        }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: none; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        @keyframes pulse { from { box-shadow: 0 2px 12px #00c6fb; } to { box-shadow: 0 2px 32px #004aad; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-logo">Construtora View</div>
+        <div class="navbar-menu">
+            <a href="/">Início</a>
+            <a href="/projetos/">Projetos</a>
+            <a href="/contato/">Contato</a>
+        </div>
+    </nav>
+    <header class="header">
+        <div class="container">
+            <h1 class="main-title">Construtora View</h1>
+            <p class="subtitle">Acompanhamento de Obras e Execução de Projetos com Transparência e Eficiência</p>
+        </div>
+    </header>
+    <main class="container">
+        <section class="hero-section">
+            <div class="hero-text">
+                <h2 style="font-size:2.2rem; font-weight:900; color:#004aad; font-family:'Montserrat',Arial,sans-serif;">Bem-vindo à Construtora View</h2>
+                <p style="font-size:1.25rem; color:#222; margin-bottom:2rem; font-family:'Roboto',Arial,sans-serif;">Soluções completas para acompanhamento de obras e execução de projetos, com tecnologia, transparência e inovação em cada etapa do seu empreendimento.</p>
+                <a href="/contato/" class="btn btn-primary" style="animation: pulse 1.5s infinite alternate; font-family:'Montserrat',Arial,sans-serif; font-size:1.25rem; font-weight:700;">Solicite uma Proposta</a>
+            </div>
+            <div class="hero-image">
+                <!-- Verifique se as imagens estão em: Construtora_view/static/images/obra1.jpg -->
+                <img src="{% static 'images/obra1.jpg' %}" alt="Obra em andamento">
+            </div>
+        </section>
+        <section class="highlights-section">
+            <h2 style="text-align:center; color:#004aad;">Nossos Diferenciais</h2>
+            <div class="highlights-grid">
+                <div class="highlight-item">
+                    <h3>Acompanhamento em Tempo Real</h3>
+                    <p>Visualize o progresso das obras com atualizações constantes e relatórios detalhados.</p>
+                </div>
+                <div class="highlight-item">
+                    <h3>Execução de Projetos Personalizados</h3>
+                    <p>Projetos sob medida para atender às necessidades do seu negócio ou residência.</p>
+                </div>
+                <div class="highlight-item">
+                    <h3>Equipe Especializada</h3>
+                    <p>Profissionais qualificados e experientes em todas as áreas da construção civil.</p>
+                </div>
+            </div>
+        </section>
+        <section class="services-section">
+            <h2 class="services-title">Nossos Serviços</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <span class="material-icons service-icon">engineering</span>
+                    <h3>Gestão de Obras</h3>
+                    <p>Planejamento, acompanhamento e entrega com transparência e eficiência.</p>
+                </div>
+                <div class="service-item">
+                    <span class="material-icons service-icon">architecture</span>
+                    <h3>Projetos Arquitetônicos</h3>
+                    <p>Desenvolvimento de projetos personalizados para residências e empresas.</p>
+                </div>
+                <div class="service-item">
+                    <span class="material-icons service-icon">home_work</span>
+                    <h3>Reformas e Construções</h3>
+                    <p>Execução de reformas e novas construções com equipe especializada.</p>
+                </div>
+            </div>
+        </section>
+        <section class="depoimentos-section">
+            <h2 class="depoimentos-title">Depoimentos de Clientes</h2>
+            <div class="depoimentos-list">
+                <div class="depoimento">
+                    "Acompanhei minha obra pelo sistema e fiquei impressionada com a transparência e agilidade. Recomendo!"
+                    <div class="depoimento-autor">— Fernanda Lima, cliente residencial</div>
+                </div>
+                <div class="depoimento">
+                    "Equipe muito profissional, entregaram meu projeto comercial antes do prazo e com qualidade superior."
+                    <div class="depoimento-autor">— Rafael Souza, empresário</div>
+                </div>
+                <div class="depoimento">
+                    "O acompanhamento em tempo real fez toda diferença. Excelente experiência!"
+                    <div class="depoimento-autor">— Juliana Silva, cliente comercial</div>
+                </div>
+            </div>
+        </section>
+        <section class="cta-section">
+            <h2>Comece Agora</h2>
+            <p>Entre em contato para saber como podemos ajudar no sucesso do seu projeto.</p>
+            <a href="/contato/" class="btn" style="animation: pulse 1.5s infinite alternate;">Solicite uma Proposta</a>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Construtora View. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    <!-- Botão flutuante para rolar para o topo -->
+    <button id="scrollTopBtn" title="Voltar ao topo">
+        <span class="material-icons">keyboard_arrow_up</span>
+    </button>
+    <script>
+        // Mostrar/ocultar botão conforme scroll
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                scrollBtn.style.display = 'flex';
+            } else {
+                scrollBtn.style.display = 'none';
+            }
+        });
+        // Rolar para o topo ao clicar
+        scrollBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

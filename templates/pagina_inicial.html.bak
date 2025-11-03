@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construtora View - Página Inicial</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="main-title">Construtora View</h1>
+            <p class="subtitle">Acompanhamento de Obras e Execução de Projetos com Transparência e Eficiência</p>
+        </div>
+    </header>
+    <main class="container">
+        <section class="intro-section">
+            <h2>Bem-vindo à Construtora View</h2>
+            <p>Oferecemos soluções completas para o acompanhamento de obras e execução de projetos, garantindo qualidade, transparência e inovação em cada etapa do seu empreendimento.</p>
+        </section>
+        <section class="highlights-section">
+            <h2>Nossos Diferenciais</h2>
+            <div class="highlights-grid">
+                <div class="highlight-item">
+                    <h3>Acompanhamento em Tempo Real</h3>
+                    <p>Visualize o progresso das obras com atualizações constantes e relatórios detalhados.</p>
+                </div>
+                <div class="highlight-item">
+                    <h3>Execução de Projetos Personalizados</h3>
+                    <p>Projetos sob medida para atender às necessidades do seu negócio ou residência.</p>
+                </div>
+                <div class="highlight-item">
+                    <h3>Equipe Especializada</h3>
+                    <p>Profissionais qualificados e experientes em todas as áreas da construção civil.</p>
+                </div>
+            </div>
+        </section>
+        <section class="cta-section">
+            <h2>Comece Agora</h2>
+            <p>Entre em contato para saber como podemos ajudar no sucesso do seu projeto.</p>
+            <a href="#contato" class="btn btn-primary">Solicite uma Proposta</a>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Construtora View. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
